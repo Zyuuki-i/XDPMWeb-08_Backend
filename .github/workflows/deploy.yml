@@ -19,11 +19,14 @@ jobs:
       - name: Publish project
         run: dotnet publish backend/backend.csproj -c Release -o publish
 
+      - name: Create app_offline.htm
+        run: echo "Updating..." > publish/app_offline.htm
+
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /www.musicstore08.somee.com/
-          local-dir: publish/
+            server: musicstore08.somee.com
+            username: ${{ secrets.FTP_USERNAME }}
+            password: ${{ secrets.FTP_PASSWORD }}
+            server-dir: /www.musicstore08.somee.com/
+            local-dir: publish/
