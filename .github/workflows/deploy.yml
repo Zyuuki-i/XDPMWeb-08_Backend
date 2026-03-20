@@ -42,3 +42,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /www.musicstore08.somee.com/
           local-dir: publish/
+      # 5. XÓA app_offline
+      - name: Remove app_offline.htm
+        run: |
+              curl -Q "DELE /www.musicstore08.somee.com/app_offline.htm" \
+              ftp://musicstore08.somee.com \
+              --user ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}
