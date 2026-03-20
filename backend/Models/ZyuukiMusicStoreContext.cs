@@ -36,7 +36,7 @@ namespace backend.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=ZYUUKI\\SQLEXPRESS;Initial Catalog=ZyuukiMusicStore;Integrated Security=True;Encrypt=False");
+                optionsBuilder.UseSqlServer("workstation id=ZyuukiMusicStore.mssql.somee.com;packet size=4096;user id=Xdpmweb08_SQLLogin_1;pwd=b9bif4osuz;data source=ZyuukiMusicStore.mssql.somee.com;persist security info=False;initial catalog=ZyuukiMusicStore;TrustServerCertificate=True");
             }
         }
 
