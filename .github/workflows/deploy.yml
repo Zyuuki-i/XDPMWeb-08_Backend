@@ -19,14 +19,26 @@ jobs:
       - name: Publish project
         run: dotnet publish backend/backend.csproj -c Release -o publish
 
+      # 1. TẠO file ngoài publish
       - name: Create app_offline.htm
-        run: echo "Updating..." > publish/app_offline.htm
+        run: echo "Updating..." > app_offline.htm
 
+      # 2. UPLOAD RIÊNG file này
+      - name: Upload app_offline.htm
+        run: |
+          curl -T app_offline.htm ftp://musicstore08.somee.com/www.musicstore08.somee.com/ \
+          --user ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}
+
+      # 3. CHỜ IIS nhả file
+      - name: Wait for IIS
+        run: sleep 10
+
+      # 4. UPLOAD PROJECT
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-            server: musicstore08.somee.com
-            username: ${{ secrets.FTP_USERNAME }}
-            password: ${{ secrets.FTP_PASSWORD }}
-            server-dir: /www.musicstore08.somee.com/
-            local-dir: publish/
+          server: musicstore08.somee.com
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /www.musicstore08.somee.com/
+          local-dir: publish/
