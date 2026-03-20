@@ -20,10 +20,10 @@ INSERT INTO NhanVien (ma_nv,tennv, matkhau, phai, sdt, email, cccd, diachi, hinh
 GO
 
 INSERT INTO NguoiDung (tennd, matkhau, sdt, diachi, phuongxa, tinhthanh, email, hinh, trangthai) VALUES
-(N'Lê Minh Hoàng', '123456', '0988252751', N'56 Cách Mạng Tháng 8',N'Phường Xuân Hòa',N'Thành phố Hồ Chí Minh', 'customer1@zyuuki.vn', NULL,1),
-(N'Nguyễn Thu Trang', '123456', '0985263321', N'129 Nguyễn Đình Chiểu',N'Phường Xuân Hòa',N'Thành phố Hồ Chí Minh', 'customer2@zyuuki.vn', NULL,1),
-(N'Trần Đức Hiếu', '123456', '0982422774', N'22 Pasteur',N'Phường Bến Thành',N'Thành phố Hồ Chí Minh', 'customer3@zyuuki.vn', NULL,1),
-(N'Ngô Hoàng Khang', '123456', '0932635865', N'233 Lê Văn Sỹ',N'Phường Phú Nhuận',N'Thành phố Hồ Chí Minh', 'customer4@zyuuki.vn', NULL,1),
+(N'Lê Minh Hoàng', '123456', '0988252751', N'56 Cách Mạng Tháng 8',N'Phường Xuân Hòa',N'Thành phố Hồ Chí Minh', 'customer1@zyuuki.vn', '8_270f6a9c-f74c-48cc-9143-99bcbd37b071.jpg',1),
+(N'Nguyễn Thu Trang', '123456', '0985263321', N'129 Nguyễn Đình Chiểu',N'Phường Xuân Hòa',N'Thành phố Hồ Chí Minh', 'customer2@zyuuki.vn', 'NV_02 _7c7b5a36-fc3a-45c0-bcd4-b5374c91e0f0',1),
+(N'Trần Đức Hiếu', '123456', '0982422774', N'22 Pasteur',N'Phường Bến Thành',N'Thành phố Hồ Chí Minh', 'customer3@zyuuki.vn', '7_ff64ece6-fe33-43da-855f-746e40fd140d.png',1),
+(N'Ngô Hoàng Khang', '123456', '0932635865', N'233 Lê Văn Sỹ',N'Phường Phú Nhuận',N'Thành phố Hồ Chí Minh', 'customer4@zyuuki.vn', '2_7217be61-8c35-4502-8737-6793e9c7ec43.jpg',1),
 (N'Nguyễn Văn An', '123456', '0927321176', N'25 Đ. Điện Biên Phủ',N'Phường Thạnh Mỹ Tây',N'Thành phố Hồ Chí Minh', 'customer5@zyuuki.vn', NULL,1);
 GO
 

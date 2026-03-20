@@ -9,6 +9,39 @@ namespace backend.Controllers
     public class NguoiDungController : ControllerBase
     {
         private ZyuukiMusicStoreContext db = new ZyuukiMusicStoreContext();
+
+        [HttpGet("{id}")]
+        public IActionResult getNguoidung(int id)
+        {
+            try
+            {
+                var nguoiDung = db.NguoiDungs.Find(id);
+                if (nguoiDung == null)
+                {
+                    return NotFound();
+                }
+                var data = new
+                {
+                    nguoiDung.MaNd,
+                    nguoiDung.Tennd,
+                    nguoiDung.Matkhau,
+                    nguoiDung.Sdt,
+                    nguoiDung.Diachi,
+                    nguoiDung.Phuongxa,
+                    nguoiDung.Tinhthanh,
+                    nguoiDung.Email,
+                    nguoiDung.Hinh,
+                    nguoiDung.Trangthai
+                };
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpGet]
         public IActionResult getDSNguoidung()
         {
