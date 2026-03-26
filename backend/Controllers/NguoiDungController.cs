@@ -41,6 +41,37 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("DanhGia/{mand}")]
+        public IActionResult getNguoidungByMand(int mand)
+        {
+            try
+            {
+                var nguoiDung = db.NguoiDungs.Find(mand);
+                if (nguoiDung == null)
+                {
+                    return NotFound();
+                }
+                var data = new
+                {
+                    nguoiDung.MaNd,
+                    nguoiDung.Tennd,
+                    nguoiDung.Matkhau,
+                    nguoiDung.Sdt,
+                    nguoiDung.Diachi,
+                    nguoiDung.Phuongxa,
+                    nguoiDung.Tinhthanh,
+                    nguoiDung.Email,
+                    nguoiDung.Hinh,
+                    nguoiDung.Trangthai
+                };
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
 
         [HttpGet]
         public IActionResult getDSNguoidung()
