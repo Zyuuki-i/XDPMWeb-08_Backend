@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.MyModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -105,5 +106,78 @@ namespace backend.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPost]
+        public IActionResult themSanPham([FromBody] CSanPham dto)
+        {
+            try
+            {
+                SanPham sp = new SanPham
+                {
+                    MaSp = dto.MaSp,
+                    Tensp = dto.Tensp,
+                    MaLoai = dto.MaLoai,
+                    MaNsx = dto.MaNsx,
+                    Giasp = dto.Giasp,
+                    Soluongton = dto.Soluongton,
+                    Mota = dto.Mota
+                };
+
+                db.SanPhams.Add(sp);
+                db.SaveChanges();
+
+                return Ok(sp);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult suaSanPham(string id, [FromBody] CSanPham dto)
+        {
+            try
+            {
+                var sp = db.SanPhams.Find(id);
+                if (sp == null) return NotFound();
+
+                sp.Tensp = dto.Tensp;
+                sp.MaLoai = dto.MaLoai;
+                sp.MaNsx = dto.MaNsx;
+                sp.Giasp = dto.Giasp;
+                sp.Soluongton = dto.Soluongton;
+                sp.Mota = dto.Mota;
+
+                db.SaveChanges();
+
+                return Ok(sp);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult xoaSanPham(string id)
+        {
+            try
+            {
+                var sp = db.SanPhams.Find(id);
+                if (sp == null) return NotFound();
+
+                db.SanPhams.Remove(sp);
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //end
     }
 }

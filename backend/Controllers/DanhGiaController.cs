@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.MyModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,7 +65,28 @@ namespace backend.Controllers
             { return BadRequest(); }
         }
 
+        [HttpPost]
+        public IActionResult themDanhgia([FromBody] CDanhGia dg)
+        {
+            try
+            {
+                if (dg == null)
+                    return BadRequest();
+                DanhGia newDG = new DanhGia();
+                newDG.MaNd = dg.MaNd;
+                newDG.MaSp = dg.MaSp;
+                newDG.Noidung = dg.Noidung;
+                newDG.Sosao = dg.Sosao;
+                db.DanhGia.Add(newDG);
+                db.SaveChanges();
 
+                return Ok(newDG);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         //end
     }
