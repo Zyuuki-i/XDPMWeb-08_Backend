@@ -88,6 +88,48 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult suaDanhGia(int id, [FromBody] CDanhGia dto)
+        {
+            try
+            {
+                var dg = db.DanhGia.Find(id);
+                if (dg == null) return NotFound();
+
+                dg.MaNd = dto.MaNd;
+                dg.MaSp = dto.MaSp;
+                dg.Noidung = dto.Noidung;
+                dg.Sosao = dto.Sosao;
+
+                db.SaveChanges();
+
+                return Ok(dg);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult xoaDanhGia(int id)
+        {
+            try
+            {
+                var dg = db.DanhGia.Find(id);
+                if (dg == null) return NotFound();
+
+                db.DanhGia.Remove(dg);
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         //end
     }
 }

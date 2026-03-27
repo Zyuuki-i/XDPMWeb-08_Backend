@@ -13,6 +13,7 @@ namespace backend.MyModels
         public int? Phantramgiam { get; set; }
         public DateTime? Ngaybd { get; set; }
         public DateTime? Ngaykt { get; set; }
+        public int? Tongsl { get; set; }
 
     }
 }

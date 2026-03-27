@@ -77,6 +77,28 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut]
+        public IActionResult suaCTDDH([FromBody] CChiTietDonDatHang dto)
+        {
+            try
+            {
+                ChiTietDonDatHang? ct = db.ChiTietDonDatHangs.Where(t => t.MaDdh == dto.MaDdh && t.MaSp == dto.MaSp).FirstOrDefault();
+                if (ct == null) return NotFound();
+
+                ct.Soluong = dto.Soluong;
+                ct.Gia = dto.Gia;
+                ct.Thanhtien= dto.Thanhtien;
+
+                db.SaveChanges();
+
+                return Ok(ct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete("{maddh}")]
         public IActionResult xoaCTDDH(int maddh)
         {

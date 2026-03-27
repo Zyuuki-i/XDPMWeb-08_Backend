@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.MyModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,12 @@ namespace backend.Controllers
     {
         private ZyuukiMusicStoreContext db = new ZyuukiMusicStoreContext();
 
-        [HttpGet("{mahinh}")]
-        public IActionResult getHinh(int mahinh)
+        [HttpGet("{id}")]
+        public IActionResult getHinh(int id)
         {
             try
             {
-                var query = db.Hinhs.Where(t => t.MaHinh == mahinh);
+                var query = db.Hinhs.Where(t => t.MaHinh == id);
                 if (query == null) return NotFound();
                 var data = query.Select(
                     t => new {
@@ -82,6 +83,69 @@ namespace backend.Controllers
             }
             catch (Exception)
             { return BadRequest(); }
+        }
+
+        [HttpPost]
+        public IActionResult themHinh([FromBody] CHinh dto)
+        {
+            try
+            {
+                Hinh x = new Hinh
+                {
+                    MaHinh = dto.MaHinh,
+                    MaSp = dto.MaSp,
+                    Tenhinh = dto.Tenhinh
+                };
+
+                db.Hinhs.Add(x);
+                db.SaveChanges();
+
+                return Ok(x);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult suaHinh(int id, [FromBody] CHinh dto)
+        {
+            try
+            {
+                var x = db.Hinhs.Find(id);
+                if (x == null) return NotFound();
+
+                x.Tenhinh = dto.Tenhinh;
+                x.MaSp = dto.MaSp;
+
+                db.SaveChanges();
+
+                return Ok(x);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult xoaHinh(int id)
+        {
+            try
+            {
+                var x = db.Hinhs.Find(id);
+                if (x == null) return NotFound();
+
+                db.Hinhs.Remove(x);
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

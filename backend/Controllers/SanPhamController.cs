@@ -24,8 +24,8 @@ namespace backend.Controllers
                     .Select(t => new {
                         t.MaSp,
                         t.Tensp,
-                        t.MaLoaiNavigation.Tenloai,
-                        t.MaNsxNavigation.Tennsx,
+                        Tenloai = t.MaLoaiNavigation != null ? t.MaLoaiNavigation.Tenloai : "",
+                        Tennsx = t.MaNsxNavigation != null ? t.MaNsxNavigation.Tennsx : "",
                         t.MaNsx,
                         t.MaLoai,
                         t.Giasp,
@@ -74,6 +74,10 @@ namespace backend.Controllers
                 {
                     query = query.Where(sp => sp.Tensp.Contains(keyword));
                 }
+                else if (!string.IsNullOrEmpty(maloai) && !string.IsNullOrEmpty(mansx))
+                {
+                    query = query.Where(sp => sp.MaLoai == maloai && sp.MaNsx == mansx);
+                }
                 else if (!string.IsNullOrEmpty(maloai))
                 {
                     query = query.Where(sp => sp.MaLoai == maloai);
@@ -89,8 +93,8 @@ namespace backend.Controllers
                     .Select(t => new {
                         t.MaSp,
                         t.Tensp,
-                        t.MaLoaiNavigation.Tenloai,
-                        t.MaNsxNavigation.Tennsx,
+                        Tenloai = t.MaLoaiNavigation != null ? t.MaLoaiNavigation.Tenloai : "",
+                        Tennsx = t.MaNsxNavigation != null ? t.MaNsxNavigation.Tennsx : "",
                         t.MaNsx,
                         t.MaLoai,
                         t.Giasp,
