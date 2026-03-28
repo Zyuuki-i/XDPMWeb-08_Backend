@@ -147,5 +147,24 @@ namespace backend.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpDelete("SanPham/{masp}")]
+        public IActionResult xoaHinhAll(string masp)
+        {
+            try
+            {
+                var x = db.Hinhs.Where(x => x.MaSp == masp).ToList();
+                if (x == null) return NotFound();
+
+                db.Hinhs.RemoveRange(x);
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

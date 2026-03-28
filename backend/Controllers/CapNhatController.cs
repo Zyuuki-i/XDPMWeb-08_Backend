@@ -129,5 +129,24 @@ namespace backend.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpDelete("SanPham/{masp}")]
+        public IActionResult xoaCNAll(string masp)
+        {
+            try
+            {
+                var x = db.CapNhats.Where(x=>x.MaSp==masp).ToList();
+                if (x == null) return NotFound();
+
+                db.CapNhats.RemoveRange(x);
+                db.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

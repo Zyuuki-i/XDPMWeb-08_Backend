@@ -107,12 +107,103 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("TrangThai")]
+        public IActionResult getNguoidungByTt(bool trangthai)
+        {
+            try
+            {
+                var data = db.NhanViens.Include(x=>x.MaVtNavigation).Where(t => t.Trangthai == trangthai)
+                    .Select(
+                    nv => new {
+                        nv.MaNv,
+                        nv.Tennv,
+                        nv.Matkhau,
+                        nv.Phai,
+                        nv.Sdt,
+                        nv.Email,
+                        nv.Cccd,
+                        nv.Diachi,
+                        nv.Hinh,
+                        nv.MaVt,
+                        nv.MaVtNavigation.Tenvt,
+                        nv.Trangthai
+                    }).ToList();
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("VaiTro")]
+        public IActionResult getNguoidungByVt(string vaitro)
+        {
+            try
+            {
+                var data = db.NhanViens.Include(x => x.MaVtNavigation).Where(t => t.MaVt.Trim() == vaitro)
+                    .Select(
+                    nv => new {
+                        nv.MaNv,
+                        nv.Tennv,
+                        nv.Matkhau,
+                        nv.Phai,
+                        nv.Sdt,
+                        nv.Email,
+                        nv.Cccd,
+                        nv.Diachi,
+                        nv.Hinh,
+                        nv.MaVt,
+                        nv.MaVtNavigation.Tenvt,
+                        nv.Trangthai
+                    }).ToList();
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet("Email")]
         public IActionResult getNguoidungByEmail(string email)
         {
             try
             {
                 var nv = db.NhanViens.FirstOrDefault(t => t.Email == email);
+                if (nv == null)
+                {
+                    return NotFound();
+                }
+                string? tenvt = db.VaiTros.Find(nv.MaVt)?.Tenvt;
+                var data = new
+                {
+                    nv.MaNv,
+                    nv.Tennv,
+                    nv.Matkhau,
+                    nv.Phai,
+                    nv.Sdt,
+                    nv.Email,
+                    nv.Cccd,
+                    nv.Diachi,
+                    nv.Hinh,
+                    nv.MaVt,
+                    Tenvt = tenvt,
+                    nv.Trangthai
+                };
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet("CCCD")]
+        public IActionResult getNguoidungByCCCD(string cccd)
+        {
+            try
+            {
+                var nv = db.NhanViens.FirstOrDefault(t => t.Cccd == cccd);
                 if (nv == null)
                 {
                     return NotFound();

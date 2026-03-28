@@ -62,6 +62,32 @@ namespace backend.Controllers
             { return BadRequest(); }
         }
 
+        [HttpGet("TrangThai")]
+        public IActionResult getDondathang(string trangthai)
+        {
+            try
+            {
+                var data = db.DonDatHangs.Where(x => x.Trangthai == trangthai).Select(t => new {
+                    t.MaDdh,
+                    t.MaNd,
+                    t.MaNv,
+                    t.Nguoinhan,
+                    t.Sdt,
+                    t.Diachi,
+                    t.Phuongxa,
+                    t.Tinhthanh,
+                    t.Ngaydat,
+                    t.Tongtien,
+                    t.Trangthai,
+                    t.TtThanhtoan,
+                    t.Phuongthuc,
+                }).ToList();
+                return Ok(data);
+            }
+            catch (Exception)
+            { return BadRequest(); }
+        }
+
         [HttpPost]
         public IActionResult themDonDatHang([FromBody] CDonDatHang dto)
         {

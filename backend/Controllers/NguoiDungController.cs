@@ -73,6 +73,33 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("TrangThai")]
+        public IActionResult getNguoidungByTt(bool trangthai)
+        {
+            try
+            {
+                var data = db.NguoiDungs.Where(t=>t.Trangthai==trangthai)
+                    .Select( 
+                    x => new {
+                        x.MaNd,
+                        x.Tennd,
+                        x.Matkhau,
+                        x.Sdt,
+                        x.Diachi,
+                        x.Phuongxa,
+                        x.Tinhthanh,
+                        x.Email,
+                        x.Hinh,
+                        x.Trangthai
+                    }).ToList();
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
 
         [HttpGet]
         public IActionResult getDSNguoidung()

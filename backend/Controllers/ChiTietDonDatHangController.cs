@@ -52,6 +52,27 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("SanPham/{masp}")]
+        public IActionResult getDSChitietdondathangByMasp(string masp)
+        {
+            try
+            {
+                var data = db.ChiTietDonDatHangs.Where(x => x.MaSp == masp).Select(t => new
+                {
+                    t.MaDdh,
+                    t.MaSp,
+                    t.Soluong,
+                    t.Gia,
+                    t.Thanhtien
+                }).ToList();
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public IActionResult themCTDDH([FromBody] CChiTietDonDatHang ct)
         {

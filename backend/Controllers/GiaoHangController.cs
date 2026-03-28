@@ -100,7 +100,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult suaGiaoHang(string id, [FromBody] CGiaoHang dto)
+        public IActionResult suaGiaoHang(int id, [FromBody] CGiaoHang dto)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult xoaGiaoHang(string id)
+        public IActionResult xoaGiaoHang(int id)
         {
             try
             {
