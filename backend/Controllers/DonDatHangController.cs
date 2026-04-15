@@ -89,13 +89,11 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult themDonDatHang([FromBody] CDonDatHang dto)
+        public IActionResult themDonDatHang([FromBody] MDonDatHang dto)
         {
+            using var transaction = db.Database.BeginTransaction();
             try
             {
-                if (dto == null)
-                    return BadRequest();
-
                 DonDatHang ddh = new DonDatHang
                 {
                     MaNd = dto.MaNd,
@@ -111,15 +109,34 @@ namespace backend.Controllers
                     TtThanhtoan = dto.TtThanhtoan,
                     Phuongthuc = dto.Phuongthuc
                 };
-
                 db.DonDatHangs.Add(ddh);
                 db.SaveChanges();
 
-                return Ok(ddh);
+                if (dto.chiTietDonDatHangs != null)
+                {
+                    foreach (var item in dto.chiTietDonDatHangs)
+                    {
+                        ChiTietDonDatHang ctddh = new ChiTietDonDatHang
+                        {
+                            MaSp = item.MaSp,
+                            Soluong = item.Soluong,
+                            Gia = item.Gia,
+                            Thanhtien = item.Thanhtien
+                        };
+                        ctddh.MaDdh = ddh.MaDdh;
+                        db.ChiTietDonDatHangs.Add(ctddh);
+                    }
+                }
+
+                db.SaveChanges();
+
+                transaction.Commit();
+                return Ok();
             }
-            catch (Exception ex)
+            catch
             {
-                return BadRequest(ex.Message);
+                transaction.Rollback();
+                return BadRequest();
             }
         }
 
